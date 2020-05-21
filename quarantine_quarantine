@@ -1,0 +1,37 @@
+var audio_url = "https://msaanalytics.s3.amazonaws.com/quarantine_radio.mp3"
+var audio = new Audio(audio_url);
+var prodbriefs = document.getElementsByClassName("productbrief");
+
+var prod_count = 0;
+var prod_total = 0;
+//audio.play();
+
+var spanners = document.getElementsByTagName("span");
+var lookers = "across all facilities";
+var col_items = [];
+for(var i=0; i < spanners.length;i++){
+    if(spanners[i].innerText.toUpperCase().indexOf(lookers.toUpperCase()) > -1)
+    {
+        prod_count = spanners[i+1].innerText.trim();
+        prod_count = parseInt(prod_count);
+        
+        if(prod_count > 0 )
+        {
+          prod_total+=1;
+           var prodbriefer =  spanners[i].parentElement.parentElement.parentElement.children[2].children[0].children[0].children[0];
+          var prodbriefer_href = prodbriefer.href;
+          //console.log(prodbriefer_href);
+          col_items.push(prodbriefer_href);
+        }
+    }
+}
+
+if(prod_total > 0){ 
+    console.log(`${prod_total} items found.`);
+    col_items.forEach(item => console.log(item));
+    audio.play();
+}
+
+else {
+console.log("No new items.");
+}
